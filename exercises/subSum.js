@@ -5,17 +5,26 @@ module.exports.run = function(x, y) {
 
 	Example:
 
-	-1  1  5        function(1, 1) => 12
+	-1  1  5    function(1, 1) => 12
 	 9  3  7		function(1, 0) => 0
 	 2  8  4		function(0, 1) => 8
 
 	 Write your code below the comment.
 */
-const twoDArray = [[0,  4,  2,  1],
-		   [3, -1,  1,  0],
-		   [0,  0,  2,  3],
-		   [1,  3, -3,  0]];
+	const twoDArray = 
+	 [[0,  4,  2,  1],
+		[3, -1,  1,  0],
+		[0,  0,  2,  3],
+		[1,  3, -3,  0]];
 
+	// Time : O(x * y), Space : O(1) or O(x * y) IF you include the input matrix
+	let sum = 0;
+	for (let i = 0; i <= y; i++) {
+		for (let j = 0; j <= x; j++) {
+			sum += twoDArray[i][j];
+		}
+	}
+	return sum;
 };
 
 

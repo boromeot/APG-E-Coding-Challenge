@@ -1,4 +1,4 @@
-module.exports.run = function(movies) {
+module.exports.run = async function(movies) {
 /*
 	You are given a list of urls that will be used to search up movies.
 	Make a GET call with axios using the given urls to search each movies.
@@ -16,5 +16,33 @@ module.exports.run = function(movies) {
 
 	Write your code below the comment.
 */
+	const axios = require('axios');
 
+	try {
+		// Get and store all the reponses
+		const reponses = await Promise.all(
+			movies.map(url => {
+				return axios.get(url);
+			})
+		);
+
+		// Map and return the required details
+		return reponses.map(response => {
+
+			// Check if response has required data
+			if (!response.data || !response.data.Title || !response.data.Year || !response.data.Genre) {
+				throw new Error('Invalid response format. Missing required data');
+			}
+
+			// Uses object destructuring
+			const moviesDetails = {
+				Title,
+				Year,
+				Genre,
+			} = response.data;
+			return moviesDetails;
+		});
+	} catch (error) {
+		throw error;
+	}
 };

@@ -1,3 +1,5 @@
+const { result } = require("lodash");
+
 module.exports.run = function(csv){
 /*
 	A stringified CSV file will be passed into this function.
@@ -15,5 +17,32 @@ module.exports.run = function(csv){
 
 	Write your code below the comment.
 */
+		// Get every line / row from the CSV
+		const lines = csv.split('/n');
 
-};
+		// Check if CSV has enough lines
+		if (lines.length < 2) {
+			throw new Error('Invalid CSV format. Must contain at least two lines.')
+		}
+
+		// Extract the headers from the first line
+		const headers = lines.shift().split(',');
+
+		// Map the remaining lines to their coresponding header
+		const result = lines.map(line => {
+			const values = line.split(',');
+			
+			// Check if CSV is well formatted
+			if (headers.length !== values.length) {
+				throw new Error('Invalid CSV format. Inconsistant number of columns');
+			}
+
+			const obj = {};
+			for (let i = 0; i < headers.length; i++) {
+				obj[headers[i]] = values[i];
+			}
+			return obj;
+		});
+
+		return result;
+	};

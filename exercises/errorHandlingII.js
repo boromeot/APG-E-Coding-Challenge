@@ -1,5 +1,5 @@
 module.exports.run = function(url){
-/*
+	/*
 	You are given a url. Make a GET call with axios using the given url.
 	However, there is something wrong with the url, and it throws an error.
 	This error will have a property 'message'. Properly return the message, adding 'Error: ' to the beginning of the message.
@@ -8,4 +8,18 @@ module.exports.run = function(url){
 
 	Write your code below the comment.
 */
+	const axios = require('axios');
+
+	return axios.get(url)
+		.then(response => {
+			return response.data;
+		})
+		.catch(error => {
+			if (error.message) {
+				return `Error: ${error.message}`;
+			} else {
+				throw error;
+			}
+		}
+	)
 };
